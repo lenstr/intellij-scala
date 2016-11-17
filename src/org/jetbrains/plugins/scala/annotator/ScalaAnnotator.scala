@@ -55,7 +55,7 @@ import org.jetbrains.plugins.scala.util.{MultilineStringUtil, ScalaUtils}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.{Seq, Set, mutable}
-import scala.meta.intellij.ExpansionUtil
+import scala.meta.intellij.MetaExpansionsManager
 
 /**
  * User: Alexander Podkhalyuzin
@@ -435,12 +435,12 @@ class ScalaAnnotator extends Annotator with FunctionAnnotator with ScopeAnnotato
 
   private def checkMetaAnnotation(annotation: ScAnnotation, holder: AnnotationHolder) = {
     if (annotation.isMetaAnnotation) {
-      if (!ExpansionUtil.isUpToDate(annotation)) {
+      if (!MetaExpansionsManager.isUpToDate(annotation)) {
         val warning = holder.createWarningAnnotation(annotation, ScalaBundle.message("scala.meta.recompile"))
         warning.registerFix(new RecompileAnnotationAction(annotation))
       }
       val result = annotation.parent.flatMap(_.parent) match {
-        case Some(ah: ScAnnotationsHolder) => ah.getExpansionText
+        case Some(ah: ScAnnotationsHolder) => ah.getMetaExpansion
         case _ => Right("")
       }
       result match {
