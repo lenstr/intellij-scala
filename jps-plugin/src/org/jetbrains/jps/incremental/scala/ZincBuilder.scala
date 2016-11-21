@@ -14,17 +14,18 @@ import org.jetbrains.jps.incremental._
 import org.jetbrains.jps.incremental.java.JavaBuilder
 import org.jetbrains.jps.incremental.messages.ProgressMessage
 import org.jetbrains.jps.incremental.scala.ScalaBuilder._
-import org.jetbrains.jps.incremental.scala.local.IdeClientSbt
+import org.jetbrains.jps.incremental.scala.local.IdeClientZinc
 import org.jetbrains.jps.incremental.scala.model.IncrementalityType
 import org.jetbrains.jps.model.JpsProject
 
 import _root_.scala.collection.JavaConverters._
 
 /**
- * @author Pavel Fatin
- */
-class SbtBuilder extends ModuleLevelBuilder(BuilderCategory.TRANSLATOR) {
-  override def getPresentableName = "Scala SBT builder"
+  * Builds project using the Zinc incremental compiler, which is originally from SBT
+  * @author Pavel Fatin
+  */
+class ZincBuilder extends ModuleLevelBuilder(BuilderCategory.TRANSLATOR) {
+  override def getPresentableName = "Scala Zinc builder"
 
   override def buildStarted(context: CompileContext): Unit = {
     val project: JpsProject = context.getProjectDescriptor.getProject
@@ -60,7 +61,7 @@ class SbtBuilder extends ModuleLevelBuilder(BuilderCategory.TRANSLATOR) {
 
     val modules = chunk.getModules.asScala.toSet
 
-    val client = new IdeClientSbt("scala", context, modules.map(_.getName).toSeq, outputConsumer, filesToCompile.get)
+    val client = new IdeClientZinc("scala", context, modules.map(_.getName).toSeq, outputConsumer, filesToCompile.get)
 
     logCustomSbtIncOptions(context, chunk, client)
 

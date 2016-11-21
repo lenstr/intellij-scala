@@ -35,7 +35,7 @@ class CompilerFactoryImpl(sbtData: SbtData) extends CompilerFactory {
           val classpathOptions = ClasspathOptions.javac(compiler = false)
           AggressiveCompile.directOrFork(scala, classpathOptions, compilerData.javaHome)
         }
-        new SbtCompiler(javac, scalac, fileToStore)
+        new ZincCompiler(javac, scalac, fileToStore)
         
       case IncrementalityType.IDEA =>
         if (scalac.isDefined) new IdeaIncrementalCompiler(scalac.get)

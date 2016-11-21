@@ -12,7 +12,7 @@ import sbt.inc.{Analysis, AnalysisStore, IncOptions, Locate}
 /**
  * @author Pavel Fatin
  */
-class SbtCompiler(javac: JavaCompiler, scalac: Option[AnalyzingCompiler], fileToStore: File => AnalysisStore) extends AbstractCompiler {
+class ZincCompiler(javac: JavaCompiler, scalac: Option[AnalyzingCompiler], fileToStore: File => AnalysisStore) extends AbstractCompiler {
   def compile(compilationData: CompilationData, client: Client) {
 
     client.progress("Searching for changed files...")
@@ -28,7 +28,7 @@ class SbtCompiler(javac: JavaCompiler, scalac: Option[AnalyzingCompiler], fileTo
     val analysisStore = fileToStore(compilationData.cacheFile)
     val (previousAnalysis, previousSetup) = {
       analysisStore.get().map {
-        case (a, s) => (a, Some(s))
+        case (a, s) => (a, Option(s))
       } getOrElse {
         (Analysis.Empty, None)
       }

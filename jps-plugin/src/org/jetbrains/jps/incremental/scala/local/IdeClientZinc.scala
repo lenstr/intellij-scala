@@ -18,11 +18,11 @@ import scala.util.control.Exception._
  * Nikolay.Tropin
  * 11/18/13
  */
-class IdeClientSbt(compilerName: String,
-                   context: CompileContext,
-                   modules: Seq[String],
-                   consumer: OutputConsumer,
-                   sourceToTarget: File => Option[BuildTarget[_ <: BuildRootDescriptor]])
+class IdeClientZinc(compilerName: String,
+                    context: CompileContext,
+                    modules: Seq[String],
+                    consumer: OutputConsumer,
+                    sourceToTarget: File => Option[BuildTarget[_ <: BuildRootDescriptor]])
         extends IdeClient(compilerName, context, modules, consumer) {
 
   def generated(source: File, outputFile: File, name: String) {

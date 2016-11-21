@@ -36,7 +36,7 @@ object ScalaBuilder {
     context.processMessage(new ProgressMessage("Reading compilation settings..."))
 
     for {
-      sbtData <-  sbtData
+      sbtData <- sbtData
       compilerData <- CompilerData.from(context, chunk)
       compilationData <- CompilationData.from(sources, context, chunk)
     }
