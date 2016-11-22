@@ -26,6 +26,7 @@ class ScalaBuilderService extends BuilderService {
       new IdeaIncrementalBuilder(BuilderCategory.SOURCE_PROCESSOR),
       new IdeaIncrementalBuilder(BuilderCategory.OVERWRITING_TRANSLATOR),
       new ZincBuilder
+      new SbtServerBuilder
     )
   }
 }
