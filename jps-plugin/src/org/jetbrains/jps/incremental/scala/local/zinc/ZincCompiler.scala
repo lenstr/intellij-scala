@@ -1,9 +1,10 @@
-package org.jetbrains.jps.incremental.scala
-package local
+package org.jetbrains.jps.incremental.scala.local.zinc
 
 import java.io.File
 
+import org.jetbrains.jps.incremental.scala.Client
 import org.jetbrains.jps.incremental.scala.data.CompilationData
+import org.jetbrains.jps.incremental.scala.local.AbstractCompiler
 import org.jetbrains.jps.incremental.scala.model.CompileOrder
 import sbt.compiler.IC.Result
 import sbt.compiler._

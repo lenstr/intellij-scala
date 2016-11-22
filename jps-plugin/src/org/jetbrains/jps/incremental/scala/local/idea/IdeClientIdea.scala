@@ -1,5 +1,4 @@
-package org.jetbrains.jps.incremental.scala
-package local
+package org.jetbrains.jps.incremental.scala.local.idea
 
 import java.io.{File, IOException}
 import java.util.Collections
@@ -9,6 +8,7 @@ import org.jetbrains.jps.builders.java.dependencyView.Callbacks
 import org.jetbrains.jps.incremental.ModuleLevelBuilder.OutputConsumer
 import org.jetbrains.jps.incremental.messages.{BuildMessage, CompilerMessage}
 import org.jetbrains.jps.incremental.scala.local.PackageObjectsData.packageObjectClassName
+import org.jetbrains.jps.incremental.scala.local.{IdeClient, LazyCompiledClass, PackageObjectsData}
 import org.jetbrains.jps.incremental.{CompileContext, Utils}
 import org.jetbrains.org.objectweb.asm.ClassReader
 

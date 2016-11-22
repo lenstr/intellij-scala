@@ -1,4 +1,4 @@
-package org.jetbrains.jps.incremental.scala.local
+package org.jetbrains.jps.incremental.scala.dotty
 
 import java.io.{File, OutputStream, PrintStream}
 import java.util.Optional
@@ -7,6 +7,7 @@ import com.martiansoftware.nailgun.ThreadLocalPrintStream
 import dotty.tools.dotc.interfaces._
 import org.jetbrains.jps.incremental.scala.Client
 import org.jetbrains.jps.incremental.scala.data.{CompilationData, CompilerJars}
+import org.jetbrains.jps.incremental.scala.local.Compiler
 import sbt.ClasspathOptions
 import sbt.compiler.CompilerArguments
 import xsbti.compile.ScalaInstance

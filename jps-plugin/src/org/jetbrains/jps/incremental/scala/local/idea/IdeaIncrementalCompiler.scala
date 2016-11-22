@@ -1,9 +1,10 @@
-package org.jetbrains.jps.incremental.scala
-package local
+package org.jetbrains.jps.incremental.scala.local.idea
 
 import java.io.File
 
+import org.jetbrains.jps.incremental.scala.Client
 import org.jetbrains.jps.incremental.scala.data.CompilationData
+import org.jetbrains.jps.incremental.scala.local.AbstractCompiler
 import sbt.compiler.{AnalyzingCompiler, CompileOutput, CompilerArguments, CompilerCache}
 import xsbti.api.SourceAPI
 import xsbti.compile.DependencyChanges

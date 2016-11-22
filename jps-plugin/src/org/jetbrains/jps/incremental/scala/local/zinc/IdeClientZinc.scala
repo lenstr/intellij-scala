@@ -1,5 +1,4 @@
-package org.jetbrains.jps.incremental.scala
-package local
+package org.jetbrains.jps.incremental.scala.local.zinc
 
 import java.io.File
 import java.util
@@ -9,6 +8,7 @@ import com.intellij.openapi.util.io.FileUtil
 import org.jetbrains.jps.builders.{BuildRootDescriptor, BuildTarget}
 import org.jetbrains.jps.incremental.CompileContext
 import org.jetbrains.jps.incremental.ModuleLevelBuilder.OutputConsumer
+import org.jetbrains.jps.incremental.scala.local.{IdeClient, LazyCompiledClass}
 
 import scala.collection.JavaConverters._
 import scala.util.control.Exception._

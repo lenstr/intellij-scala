@@ -13,13 +13,14 @@ import org.jetbrains.jps.incremental.fs.CompilationRound
 import org.jetbrains.jps.incremental.messages.{BuildMessage, CompilerMessage, ProgressMessage}
 import org.jetbrains.jps.incremental.scala.ScalaBuilder._
 import org.jetbrains.jps.incremental.scala.data.CompilerData
-import org.jetbrains.jps.incremental.scala.local.{IdeClientIdea, PackageObjectsData, ScalaReflectMacroExpansionParser}
+import org.jetbrains.jps.incremental.scala.local.{PackageObjectsData, ScalaReflectMacroExpansionParser}
 import org.jetbrains.jps.incremental.scala.model.{CompileOrder, IncrementalityType}
 
 import _root_.scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import org.jetbrains.jps.incremental._
+import org.jetbrains.jps.incremental.scala.local.idea.IdeClientIdea
 
 /**
   * Nikolay.Tropin

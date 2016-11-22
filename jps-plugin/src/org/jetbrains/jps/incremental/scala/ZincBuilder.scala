@@ -14,7 +14,7 @@ import org.jetbrains.jps.incremental._
 import org.jetbrains.jps.incremental.java.JavaBuilder
 import org.jetbrains.jps.incremental.messages.ProgressMessage
 import org.jetbrains.jps.incremental.scala.ScalaBuilder._
-import org.jetbrains.jps.incremental.scala.local.IdeClientZinc
+import org.jetbrains.jps.incremental.scala.local.zinc.IdeClientZinc
 import org.jetbrains.jps.incremental.scala.model.IncrementalityType
 import org.jetbrains.jps.model.JpsProject
 
