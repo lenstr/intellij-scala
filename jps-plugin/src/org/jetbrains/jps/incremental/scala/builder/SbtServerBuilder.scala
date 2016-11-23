@@ -1,4 +1,4 @@
-package org.jetbrains.jps.incremental.scala
+package org.jetbrains.jps.incremental.scala.builder
 
 import org.jetbrains.jps.ModuleChunk
 import org.jetbrains.jps.builders.DirtyFilesHolder

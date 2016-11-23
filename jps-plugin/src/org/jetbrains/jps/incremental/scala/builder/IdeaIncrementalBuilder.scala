@@ -1,4 +1,4 @@
-package org.jetbrains.jps.incremental.scala
+package org.jetbrains.jps.incremental.scala.builder
 
 import _root_.java.io.File
 import _root_.java.util
@@ -21,6 +21,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import org.jetbrains.jps.incremental._
 import org.jetbrains.jps.incremental.scala.local.idea.IdeClientIdea
+import org.jetbrains.jps.incremental.scala.{ChunkExclusionService, SourceDependenciesProviderService}
 
 /**
   * Nikolay.Tropin

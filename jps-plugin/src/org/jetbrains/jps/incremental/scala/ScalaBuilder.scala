@@ -139,7 +139,7 @@ object ScalaBuilder {
     true
   }
 
-  val Log = JpsLogger.getInstance(ScalaBuilder.getClass.getName)
+  val Log: JpsLogger = JpsLogger.getInstance(ScalaBuilder.getClass.getName)
 
   // Cached local localServer
   private var cachedServer: Option[Server] = None

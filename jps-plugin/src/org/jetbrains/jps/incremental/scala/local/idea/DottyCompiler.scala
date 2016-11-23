@@ -1,4 +1,4 @@
-package org.jetbrains.jps.incremental.scala.dotty
+package org.jetbrains.jps.incremental.scala.local.idea
 
 import java.io.{File, OutputStream, PrintStream}
 import java.util.Optional

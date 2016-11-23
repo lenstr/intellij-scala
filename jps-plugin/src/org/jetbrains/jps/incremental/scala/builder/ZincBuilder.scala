@@ -1,4 +1,4 @@
-package org.jetbrains.jps.incremental.scala
+package org.jetbrains.jps.incremental.scala.builder
 
 import _root_.java.util
 import java.io.File
@@ -16,6 +16,7 @@ import org.jetbrains.jps.incremental.messages.ProgressMessage
 import org.jetbrains.jps.incremental.scala.ScalaBuilder._
 import org.jetbrains.jps.incremental.scala.local.zinc.IdeClientZinc
 import org.jetbrains.jps.incremental.scala.model.IncrementalityType
+import org.jetbrains.jps.incremental.scala.{ChunkExclusionService, Client, ResourceUpdater, SourceDependenciesProviderService, TargetTimestamps}
 import org.jetbrains.jps.model.JpsProject
 
 import _root_.scala.collection.JavaConverters._
