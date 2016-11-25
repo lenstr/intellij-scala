@@ -5,9 +5,7 @@ import java.util
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.jps.incremental._
 import org.jetbrains.jps.incremental.resources.{ResourcesBuilder, StandardResourceBuilderEnabler}
-import org.jetbrains.jps.incremental.scala.builder.{IdeaIncrementalBuilder, SbtServerBuilder, ZincBuilder}
-import org.jetbrains.jps.incremental.scala.builder.idea.IdeaIncrementalBuilder
-import org.jetbrains.jps.incremental.scala.builder.zinc.ZincBuilder
+import org.jetbrains.jps.incremental.scala.builder.{IdeaIncrementalBuilder, ZincBuilder}
 import org.jetbrains.jps.incremental.scala.sources.{SbtModuleType, SharedSourcesModuleType}
 import org.jetbrains.jps.model.module.JpsModule
 
@@ -28,8 +26,8 @@ class ScalaBuilderService extends BuilderService {
     util.Arrays.asList[ModuleLevelBuilder](
       new IdeaIncrementalBuilder(BuilderCategory.SOURCE_PROCESSOR),
       new IdeaIncrementalBuilder(BuilderCategory.OVERWRITING_TRANSLATOR),
-      new ZincBuilder,
-      new SbtServerBuilder
+      new ZincBuilder
+//      ,new SbtServerBuilder
     )
   }
 }
