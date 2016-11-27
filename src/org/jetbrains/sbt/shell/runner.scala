@@ -6,6 +6,8 @@ import java.util
 
 import com.intellij.execution.configurations.{GeneralCommandLine, JavaParameters}
 import com.intellij.execution.console._
+import com.intellij.execution.filters.UrlFilter.UrlFilterProvider
+import com.intellij.execution.filters._
 import com.intellij.execution.process.{OSProcessHandler, ProcessHandler}
 import com.intellij.execution.runners.AbstractConsoleRunnerWithHistory
 import com.intellij.execution.ui.RunContentDescriptor
@@ -16,6 +18,7 @@ import com.intellij.openapi.actionSystem._
 import com.intellij.openapi.project.{DumbAwareAction, Project}
 import com.intellij.openapi.projectRoots.{JavaSdkType, JdkUtil, Sdk, SdkTypeId}
 import com.intellij.openapi.roots.ProjectRootManager
+import com.intellij.psi.search.GlobalSearchScope
 import org.jetbrains.sbt.project.structure.SbtRunner
 
 import scala.collection.JavaConverters._
@@ -46,6 +49,21 @@ class SbtShellRunner(project: Project, consoleTitle: String, workingDir: String)
   private val myConsoleView: LanguageConsoleImpl = {
     val cv = new LanguageConsoleImpl(project, SbtShellFileType.getName, SbtShellLanguage)
     cv.getConsoleEditor.setOneLineMode(true)
+
+    // exception file links
+    cv.addMessageFilter(new ExceptionFilter(GlobalSearchScope.allScope(project)))
+
+    // url links
+    new UrlFilterProvider().getDefaultFilters(project).foreach(cv.addMessageFilter)
+
+    // file links
+    val patternMacro = s"\\s${RegexpFilter.FILE_PATH_MACROS}:${RegexpFilter.LINE_MACROS}:\\s"
+    val pattern = new RegexpFilter(project, patternMacro).getPattern
+    val format = new PatternHyperlinkFormat(pattern, false, false, PatternHyperlinkPart.PATH, PatternHyperlinkPart.LINE)
+    val dataFinder = new PatternBasedFileHyperlinkRawDataFinder(Array(format))
+    val fileFilter = new PatternBasedFileHyperlinkFilter(project, null, dataFinder)
+    cv.addMessageFilter(fileFilter)
+
     cv
   }
 
