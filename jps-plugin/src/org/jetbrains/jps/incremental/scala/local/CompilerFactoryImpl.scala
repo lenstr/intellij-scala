@@ -7,7 +7,6 @@ import java.net.URLClassLoader
 import org.jetbrains.jps.incremental.scala.data.{CompilerData, CompilerJars, SbtData}
 import org.jetbrains.jps.incremental.scala.local.CompilerFactoryImpl._
 import org.jetbrains.jps.incremental.scala.local.idea.{DottyCompiler, IdeaIncrementalCompiler}
-import org.jetbrains.jps.incremental.scala.local.sbtserver.SbtServerCompiler
 import org.jetbrains.jps.incremental.scala.local.zinc.ZincCompiler
 import org.jetbrains.jps.incremental.scala.model.IncrementalityType
 import sbt.compiler.{AggressiveCompile, AnalyzingCompiler, IC}
@@ -43,10 +42,6 @@ class CompilerFactoryImpl(sbtData: SbtData) extends CompilerFactory {
       case IncrementalityType.IDEA =>
         if (scalac.isDefined) new IdeaIncrementalCompiler(scalac.get)
         else throw new IllegalStateException("Could not create scalac instance")
-
-      case IncrementalityType.SBT_SERVER =>
-        new SbtServerCompiler()
-
     }
 
   }
