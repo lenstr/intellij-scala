@@ -1,10 +1,8 @@
 package org.jetbrains.sbt.shell
 
 import java.awt.event.KeyEvent
-import java.io.File
 import java.util
 
-import com.intellij.execution.configurations.{GeneralCommandLine, JavaParameters}
 import com.intellij.execution.console._
 import com.intellij.execution.filters.UrlFilter.UrlFilterProvider
 import com.intellij.execution.filters._
@@ -16,36 +14,16 @@ import com.intellij.execution.{ExecutionManager, Executor}
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem._
 import com.intellij.openapi.project.{DumbAwareAction, Project}
-import com.intellij.openapi.projectRoots.{JavaSdkType, JdkUtil, Sdk, SdkTypeId}
-import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.psi.search.GlobalSearchScope
-import org.jetbrains.sbt.project.structure.SbtRunner
 
 import scala.collection.JavaConverters._
 
 /**
   * Created by jast on 2016-5-29.
   */
-class SbtShellRunner(project: Project, consoleTitle: String, workingDir: String)
-  extends AbstractConsoleRunnerWithHistory[LanguageConsoleImpl](project, consoleTitle, workingDir) {
+class SbtShellRunner(project: Project, consoleTitle: String)
+  extends AbstractConsoleRunnerWithHistory[LanguageConsoleImpl](project, consoleTitle, project.getBaseDir.getCanonicalPath) {
 
-  val sdk: Sdk = ProjectRootManager.getInstance(project).getProjectSdk
-  assert(sdk != null)
-  val sdkType: SdkTypeId = sdk.getSdkType
-  assert(sdkType.isInstanceOf[JavaSdkType])
-  val exePath: String = sdkType.asInstanceOf[JavaSdkType].getVMExecutablePath(sdk)
-  // TODO get this from configuration
-  val launcherJar: File = SbtRunner.getDefaultLauncher
-
-  private val javaParameters: JavaParameters = new JavaParameters
-  javaParameters.setJdk(sdk)
-  javaParameters.configureByProject(project, 1, sdk)
-  javaParameters.setWorkingDirectory(workingDir)
-  javaParameters.setJarPath(launcherJar.getCanonicalPath)
-  // TODO get from configuration
-  javaParameters.getVMParametersList.addAll("-XX:MaxPermSize=128M", "-Xmx2G", "-Dsbt.log.noformat=true")
-
-  private val myCommandLine: GeneralCommandLine = JdkUtil.setupJVMCommandLine(exePath, javaParameters, false)
   private val myConsoleView: LanguageConsoleImpl = {
     val cv = new LanguageConsoleImpl(project, SbtShellFileType.getName, SbtShellLanguage)
     cv.getConsoleEditor.setOneLineMode(true)
@@ -71,7 +49,7 @@ class SbtShellRunner(project: Project, consoleTitle: String, workingDir: String)
   private lazy val myConsoleExecuteActionHandler: SbtShellExecuteActionHandler =
     new SbtShellExecuteActionHandler(getProcessHandler)
 
-  private lazy val myProcessHandler = new OSProcessHandler(myCommandLine)
+  private lazy val myProcessHandler = SbtProcessComponent.forProject(project).acquireShellProcessHandler
 
   override def createProcessHandler(process: Process): OSProcessHandler = myProcessHandler
 
@@ -118,7 +96,7 @@ class SbtShellRunner(project: Project, consoleTitle: String, workingDir: String)
   }
 
   /** A new instance of the runner with the same constructor params as this one, but fresh state. */
-  def respawn: SbtShellRunner = new SbtShellRunner(project, consoleTitle, workingDir)
+  def respawn: SbtShellRunner = new SbtShellRunner(project, consoleTitle)
 
 }
 
@@ -127,7 +105,7 @@ object SbtShellRunner {
   /** Initialize and run an sbt shell window. */
   def run(project: Project): Unit = {
     val title = "SBT Shell"
-    val cr = new SbtShellRunner(project, title, project.getBaseDir.getCanonicalPath)
+    val cr = new SbtShellRunner(project, title)
     cr.initAndRun()
   }
 }

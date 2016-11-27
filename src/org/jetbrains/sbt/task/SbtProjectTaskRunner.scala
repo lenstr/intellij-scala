@@ -1,5 +1,6 @@
 package org.jetbrains.sbt.task
 
+import java.io.OutputStreamWriter
 import java.util
 
 import com.intellij.execution.Executor
@@ -9,10 +10,9 @@ import com.intellij.openapi.externalSystem.model.ProjectSystemId
 import com.intellij.openapi.externalSystem.model.execution.ExternalSystemTaskExecutionSettings
 import com.intellij.openapi.externalSystem.util.ExternalSystemUtil
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.Messages
 import com.intellij.task._
 import org.jetbrains.annotations.Nullable
-import scala.collection.JavaConverters._
+import org.jetbrains.sbt.shell.SbtProcessComponent
 
 /**
   * Created by jast on 2016-11-25.
@@ -20,6 +20,7 @@ import scala.collection.JavaConverters._
 class SbtProjectTaskRunner extends ProjectTaskRunner {
 
   // FIXME should be based on a config option
+  // will override the usual jps build thingies
   override def canRun(projectTask: ProjectTask): Boolean = true
 
   override def run(project: Project,
@@ -27,7 +28,14 @@ class SbtProjectTaskRunner extends ProjectTaskRunner {
                    callback: ProjectTaskNotification,
                    tasks: util.Collection[_ <: ProjectTask]): Unit = {
 
-    Messages.showMessageDialog(project, s"Running sbt tasks: ${tasks.asScala.mkString(", ")}", "SbtProjectTaskRunner", null)
+    val handler = SbtProcessComponent.forProject(project).acquireShellProcessHandler
+
+    // TODO mroe robust way to get the writer
+    val shell = new OutputStreamWriter(handler.getProcessInput)
+
+    // TODO build selected module?
+    shell.write("products\n")
+    shell.flush()
   }
 
   @Nullable
