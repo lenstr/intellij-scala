@@ -45,7 +45,10 @@ class SbtProcessComponent(project: Project) extends AbstractProjectComponent(pro
     new OSProcessHandler(commandLine)
   }
 
-  /** Request an sbt shell process instance. It will be started if necessary. */
+  /** Request an sbt shell process instance. It will be started if necessary.
+    * The process handler should only be used to access the running process!
+    * SbtProcessComponent is solely responsible for handling the running state.
+    */
   def acquireShellProcessHandler: OSProcessHandler = myProcessHandler.synchronized {
     myProcessHandler.getOrElse {
       myProcessHandler = Option(createShellProcessHandler())

@@ -45,11 +45,15 @@ class SbtShellRunner(project: Project, consoleTitle: String)
     cv
   }
 
+  private lazy val processComponent = SbtProcessComponent.forProject(project)
+
   // lazy so that getProcessHandler will return something initialized when this is first accessed
   private lazy val myConsoleExecuteActionHandler: SbtShellExecuteActionHandler =
     new SbtShellExecuteActionHandler(getProcessHandler)
 
-  private lazy val myProcessHandler = SbtProcessComponent.forProject(project).acquireShellProcessHandler
+  // the process handler should only be used to access the running process!
+  // SbtProcessComponent is solely responsible for destroying/respawning
+  private lazy val myProcessHandler = processComponent.acquireShellProcessHandler
 
   override def createProcessHandler(process: Process): OSProcessHandler = myProcessHandler
 
@@ -96,7 +100,10 @@ class SbtShellRunner(project: Project, consoleTitle: String)
   }
 
   /** A new instance of the runner with the same constructor params as this one, but fresh state. */
-  def respawn: SbtShellRunner = new SbtShellRunner(project, consoleTitle)
+  def respawn: SbtShellRunner = {
+    processComponent.restartProcess()
+    new SbtShellRunner(project, consoleTitle)
+  }
 
 }
 
@@ -129,8 +136,6 @@ class RestartAction(runner: SbtShellRunner, executor: Executor, contentDescripto
     ExecutionManager.getInstance(runner.getProject)
       .getContentManager
       .removeRunContent(executor, contentDescriptor)
-
-    runner.getProcessHandler.destroyProcess()
 
     runner.respawn.initAndRun()
   }

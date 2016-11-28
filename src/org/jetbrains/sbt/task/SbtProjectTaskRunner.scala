@@ -30,7 +30,7 @@ class SbtProjectTaskRunner extends ProjectTaskRunner {
 
     val handler = SbtProcessComponent.forProject(project).acquireShellProcessHandler
 
-    // TODO mroe robust way to get the writer
+    // TODO more robust way to get the writer? cf createOutputStreamWriter.createOutputStreamWriter
     val shell = new OutputStreamWriter(handler.getProcessInput)
 
     // TODO build selected module?
