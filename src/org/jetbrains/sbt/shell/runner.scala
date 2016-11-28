@@ -45,7 +45,7 @@ class SbtShellRunner(project: Project, consoleTitle: String)
     cv
   }
 
-  private lazy val processComponent = SbtProcessComponent.forProject(project)
+  private lazy val processComponent = SbtProcessManager.forProject(project)
 
   // lazy so that getProcessHandler will return something initialized when this is first accessed
   private lazy val myConsoleExecuteActionHandler: SbtShellExecuteActionHandler =

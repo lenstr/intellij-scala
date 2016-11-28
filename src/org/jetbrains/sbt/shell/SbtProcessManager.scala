@@ -18,7 +18,7 @@ import org.jetbrains.sbt.project.structure.SbtRunner
   */
 // TODO try to make sure there is only one shell or server running. Connect to externally running shell if practical
 // TODO transparently support shell or server process
-class SbtProcessComponent(project: Project) extends AbstractProjectComponent(project) {
+class SbtProcessManager(project: Project) extends AbstractProjectComponent(project) {
 
   @volatile private var myProcessHandler: Option[OSProcessHandler] = None
 
@@ -47,7 +47,7 @@ class SbtProcessComponent(project: Project) extends AbstractProjectComponent(pro
 
   /** Request an sbt shell process instance. It will be started if necessary.
     * The process handler should only be used to access the running process!
-    * SbtProcessComponent is solely responsible for handling the running state.
+    * SbtProcessManager is solely responsible for handling the running state.
     */
   def acquireShellProcessHandler: OSProcessHandler = myProcessHandler.synchronized {
     myProcessHandler.getOrElse {
@@ -75,6 +75,6 @@ class SbtProcessComponent(project: Project) extends AbstractProjectComponent(pro
 
 }
 
-object SbtProcessComponent {
-  def forProject(project: Project): SbtProcessComponent = project.getComponent(classOf[SbtProcessComponent])
+object SbtProcessManager {
+  def forProject(project: Project): SbtProcessManager = project.getComponent(classOf[SbtProcessManager])
 }

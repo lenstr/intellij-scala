@@ -17,7 +17,7 @@
             <implementation-class>org.jetbrains.sbt.resolvers.SbtIndexesManager</implementation-class>
         </component>
         <component>
-            <implementation-class>org.jetbrains.sbt.shell.SbtProcessComponent</implementation-class>
+            <implementation-class>org.jetbrains.sbt.shell.SbtProcessManager</implementation-class>
         </component>
     </project-components>
 
