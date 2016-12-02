@@ -2,6 +2,7 @@ package org.jetbrains.sbt.shell
 
 import java.awt.event.KeyEvent
 import java.util
+import javax.swing.Icon
 
 import com.intellij.execution.console._
 import com.intellij.execution.filters.UrlFilter.UrlFilterProvider
@@ -79,7 +80,7 @@ class SbtShellRunner(project: Project, consoleTitle: String)
     val myToolbarActions = List(
       new RestartAction(this, defaultExecutor, contentDescriptor),
       new CloseAction(defaultExecutor, contentDescriptor, project),
-      new ExecuteTaskAction("compile")
+      new ExecuteTaskAction("products", Option(AllIcons.Actions.Compile))
     )
 
     val allActions = List(
@@ -147,9 +148,9 @@ class SbtShellExecuteActionHandler(processHandler: ProcessHandler)
   extends ProcessBackedConsoleExecuteActionHandler(processHandler, true) {
 }
 
-class ExecuteTaskAction(task: String) extends DumbAwareAction {
+class ExecuteTaskAction(task: String, icon: Option[Icon]) extends DumbAwareAction {
 
-  getTemplatePresentation.setIcon(AllIcons.Actions.Compile)
+  getTemplatePresentation.setIcon(icon.orNull)
   getTemplatePresentation.setText(s"Execute $task")
 
   override def actionPerformed(e: AnActionEvent): Unit = {
