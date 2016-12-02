@@ -96,7 +96,7 @@
         <editorNotificationProvider implementation="org.jetbrains.sbt.project.notifications.SbtReImportNotificationProvider"/>
         <editorNotificationProvider implementation="org.jetbrains.sbt.project.notifications.SbtNoImportNotificationProvider"/>
 
-        <projectTaskRunner implementation="org.jetbrains.sbt.task.SbtProjectTaskRunner"/>
+        <projectTaskRunner implementation="org.jetbrains.sbt.shell.SbtProjectTaskRunner"/>
 
     </extensions>
 

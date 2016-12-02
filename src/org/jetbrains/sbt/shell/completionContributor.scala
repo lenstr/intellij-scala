@@ -25,7 +25,7 @@ object SbtShellCompletionProvider extends CompletionProvider[CompletionParameter
     // TODO just some commonly used builtins for now. later, load all the tasks, settings, commands, projects etc from sbt server and give more complete suggestions based on that!
     val tasks = Seq(
       "compile", "test", "console", "clean", "update", "updateClassifiers", "updateSbtClassifiers",
-      "publish", "publishLocal", "consoleProject")
+      "products", "publish", "publishLocal", "consoleProject")
 
     val settings = Seq("libraryDependencies", "baseDirectory", "sourceDirectory", "unmanagedBase", "target")
 
