@@ -7,6 +7,7 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.refactoring.changeSignature.JavaParameterInfo
 import com.intellij.refactoring.util.CanonicalTypes
+import org.jetbrains.plugins.scala.extensions.PsiElementExt
 import org.jetbrains.plugins.scala.lang.psi.api.base.ScMethodLike
 import org.jetbrains.plugins.scala.lang.psi.api.statements.params.{ScParameter, ScParameterClause}
 import org.jetbrains.plugins.scala.lang.psi.impl.ScalaPsiManager
@@ -51,9 +52,11 @@ class ScalaParameterInfo(@BeanProperty var name: String,
   protected def psiType: PsiType = {
     if (scType == null) return null
 
-    val allScope = GlobalSearchScope.allScope(project)
+    implicit val project = this.project
+    implicit val allScope = GlobalSearchScope.allScope(project)
+
     if (isByName) {
-      val functionType = FunctionType(scType, Seq())(project, allScope)
+      val functionType = FunctionType(scType, Seq())
       functionType.toPsiType(project, allScope)
     }
     else if (isRepeatedParameter) {
