@@ -27,14 +27,18 @@ class SbtProjectTaskRunner extends ProjectTaskRunner {
   override def canRun(projectTask: ProjectTask): Boolean = projectTask match {
     case task: ModuleBuildTask =>
       val module = task.getModule
-      // SbtModuleType actually denotes `-build` modules, which are not part of the regular build
-      ! ModuleType.get(module).isInstanceOf[SbtModuleType] &&
-      ExternalSystemApiUtil.isExternalSystemAwareModule(SbtProjectSystem.Id, module)
+      ModuleType.get(module) match {
+        case _: SbtModuleType =>
+          // SbtModuleType actually denotes `-build` modules, which are not part of the regular build
+          false
+        case _ =>
+          ExternalSystemApiUtil.isExternalSystemAwareModule(SbtProjectSystem.Id, module)
+      }
     case _: ArtifactBuildTask =>
-      // TODO
+      // TODO should sbt handle this?
       false
     case _: ExecuteRunConfigurationTask =>
-      // TODO
+      // TODO this includes tests (and what else?). sbt should handle it and test output should be parsed
       false
     case _ => false
   }
