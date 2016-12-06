@@ -76,7 +76,7 @@ class SbtProcessListener extends ProcessAdapter {
     else if (text contains "[success]")
       success = true
 
-    if (taskCompleted(text)) {
+    if (!promise.isCompleted && taskCompleted(text)) {
       val res = new ProjectTaskResult(false, errors, warnings)
       promise.complete(Success(res))
     }
