@@ -2,8 +2,9 @@
 
 package org.jetbrains.sbt.shell.grammar;
 
-import com.intellij.lexer.*;
+import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
+
 import static org.jetbrains.sbt.shell.grammar.SbtShellTypes.*;
 
 

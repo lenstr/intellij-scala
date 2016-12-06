@@ -1,24 +1,24 @@
 // This is a generated file. Not intended for manual editing.
 package org.jetbrains.sbt.shell.grammar.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static org.jetbrains.sbt.shell.grammar.SbtShellTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import org.jetbrains.sbt.shell.grammar.*;
+import org.jetbrains.sbt.shell.grammar.SbtShellIntask;
+import org.jetbrains.sbt.shell.grammar.SbtShellVisitor;
+import org.jetbrains.annotations.NotNull;
 
-public class SbtShellConfigImpl extends ASTWrapperPsiElement implements SbtShellConfig {
+import static org.jetbrains.sbt.shell.grammar.SbtShellTypes.ID;
 
-  public SbtShellConfigImpl(ASTNode node) {
+public class SbtShellIntaskImpl extends ASTWrapperPsiElement implements SbtShellIntask {
+
+  public SbtShellIntaskImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SbtShellVisitor visitor) {
-    visitor.visitConfig(this);
+    visitor.visitIntask(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {

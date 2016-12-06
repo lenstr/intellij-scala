@@ -1,8 +1,8 @@
-package org.jetbrains.sbt.shell.grammar;
+package org.jetbrains.sbt.shell.org.jetbrains.sbt.shell.grammar.grammar;
 
 import com.intellij.lexer.*;
 import com.intellij.psi.tree.IElementType;
-import static org.jetbrains.sbt.shell.grammar.SbtShellTypes.*;
+import static org.jetbrains.sbt.shell.org.jetbrains.sbt.shell.grammar.grammar.SbtShellTypes.*;
 
 %%
 
