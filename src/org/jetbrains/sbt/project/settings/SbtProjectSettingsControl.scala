@@ -45,6 +45,7 @@ class SbtProjectSettingsControl(context: Context, initialSettings: SbtProjectSet
   private val resolveClassifiersCheckBox = new JCheckBox(SbtBundle("sbt.settings.resolveClassifiers"))
   private val resolveJavadocsCheckBox = new JCheckBox(SbtBundle("sbt.settings.resolveJavadocs"))
   private val resolveSbtClassifiersCheckBox = new JCheckBox(SbtBundle("sbt.settings.resolveSbtClassifiers"))
+  private val useSbtShellCheckBox = new JCheckBox(SbtBundle("sbt.settings.useShell"))
 
   def fillExtraControls(@NotNull content: PaintAwarePanel, indentLevel: Int) {
     val downloadPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0))
@@ -53,6 +54,7 @@ class SbtProjectSettingsControl(context: Context, initialSettings: SbtProjectSet
     downloadPanel.add(resolveSbtClassifiersCheckBox)
     content.add(new JLabel("Download:"), getLabelConstraints(indentLevel))
     content.add(downloadPanel, getFillLineConstraints(indentLevel))
+    content.add(useSbtShellCheckBox)
 
     if (context == Context.Wizard) {
       val label = new JLabel("Project \u001BSDK:")
@@ -73,7 +75,8 @@ class SbtProjectSettingsControl(context: Context, initialSettings: SbtProjectSet
     selectedJdkName != settings.jdkName ||
       resolveClassifiersCheckBox.isSelected != settings.resolveClassifiers ||
       resolveSbtClassifiersCheckBox.isSelected != settings.resolveSbtClassifiers ||
-      resolveJavadocsCheckBox.isSelected != settings.resolveJavadocs
+      resolveJavadocsCheckBox.isSelected != settings.resolveJavadocs ||
+      useSbtShellCheckBox.isSelected != settings.useSbtShell
   }
 
   protected def resetExtraSettings(isDefaultModuleCreation: Boolean) {
@@ -85,6 +88,7 @@ class SbtProjectSettingsControl(context: Context, initialSettings: SbtProjectSet
     resolveClassifiersCheckBox.setSelected(settings.resolveClassifiers)
     resolveSbtClassifiersCheckBox.setSelected(settings.resolveSbtClassifiers)
     resolveJavadocsCheckBox.setSelected(settings.resolveJavadocs)
+    useSbtShellCheckBox.setSelected(settings.useSbtShell)
   }
 
   override def updateInitialExtraSettings() {
@@ -96,6 +100,7 @@ class SbtProjectSettingsControl(context: Context, initialSettings: SbtProjectSet
     settings.resolveClassifiers = resolveClassifiersCheckBox.isSelected
     settings.resolveSbtClassifiers = resolveSbtClassifiersCheckBox.isSelected
     settings.resolveJavadocs = resolveJavadocsCheckBox.isSelected
+    settings.useSbtShell = useSbtShellCheckBox.isSelected
   }
 
   private def selectedJdkName = Option(jdkComboBox.getSelectedJdk).map(_.getName)

@@ -13,6 +13,8 @@ import com.intellij.task._
 import org.jetbrains.annotations.Nullable
 import org.jetbrains.sbt.project.SbtProjectSystem
 import org.jetbrains.sbt.project.module.SbtModuleType
+import org.jetbrains.sbt.project.settings.SbtProjectSettings
+import org.jetbrains.sbt.settings.SbtSystemSettings
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
@@ -32,6 +34,10 @@ class SbtProjectTaskRunner extends ProjectTaskRunner {
           // SbtModuleType actually denotes `-build` modules, which are not part of the regular build
           false
         case _ =>
+          val project = task.getModule.getProject
+          val projectSettings = SbtSystemSettings.getInstance(project).getLinkedProjectSettings(module)
+
+          projectSettings.exists(_.useSbtShell) &&
           ExternalSystemApiUtil.isExternalSystemAwareModule(SbtProjectSystem.Id, module)
       }
     case _: ArtifactBuildTask =>
