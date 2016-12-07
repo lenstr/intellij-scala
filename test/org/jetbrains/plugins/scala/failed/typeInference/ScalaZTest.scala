@@ -5,7 +5,7 @@ import org.jetbrains.plugins.scala.lang.typeInference.TypeInferenceTestBase
 import org.junit.experimental.categories.Category
 
 /**
-  * @author mucianm 
+  * @author mucianm
   * @since 28.03.16.
   */
 @Category(Array(classOf[PerfCycleTests]))
@@ -87,4 +87,21 @@ class ScalaZTest extends TypeInferenceTestBase {
       """.stripMargin)
   }
 
+  def testSCL11085a(): Unit = {
+    doTest(
+      s"""
+         |  import scalaz.{\\/ ⇒ ∨}
+         |  ∨.left(${START}"hello"$END)
+         |//A
+      """.stripMargin)
+  }
+
+  def testSCL11085b(): Unit = {
+    doTest(
+      s"""
+         |  import scalaz.{\\/ ⇒ ∨}
+         |  ∨.right(${START}"hello"$END)
+         |//B
+      """.stripMargin)
+  }
 }
